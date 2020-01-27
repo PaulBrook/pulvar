@@ -1,5 +1,5 @@
 # pulvar
-Pulsar Variability Analysis Software
+Analysis software for pulsar variability
 
 Input files must be text files of the following format:
 
