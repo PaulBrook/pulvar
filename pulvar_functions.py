@@ -249,6 +249,7 @@ def save_profiles(pulsar, data, mjd, allbins,directory,ylabel='Flux Density (mJy
             ax.set_ylim([-np.max(data)*0.05,np.max(data)*1.05])
         ax.set_ylabel(r'Flux Density (mJy)',fontsize=14)
         ax.set_xlabel(r'Phase Bins',fontsize=14)
+        xlocs = [0.,102.3,204.6,306.9,409.2,511.5,613.8,716.1,818.4,920.7,1023.]
         ax.set_xticks(xlocs,xticklabels)
         fig.tight_layout()
         plt.savefig('./{0}/{3}/{1}_{2}.png' .format(pulsar,int(math.floor(mjd[i])),i,directory))
@@ -351,7 +352,7 @@ def variability_map_plot(obs_mjd,gp_data,flux_data,template,window_begin,window_
     cbaxes.tick_params(axis='x', which='both', bottom=False, labelbottom=False)
 #cb.tick_params(labelsize=12)
     for obs in range(days_from_start.shape[0]):
-        ax2.vlines(days_from_start[obs],0,window_end-window_begin,linestyles='solid',alpha=0.1)
+        ax2.vlines(days_from_start[obs],0,window_end-window_begin,linestyles='solid',alpha=0.1,color='k')
     ax2.set_xlim(0,gp_data.shape[1]);
     ax2.set_ylim(window_end-window_begin-1,0)
     date_labels = np.linspace(0,gp_data.shape[1],5)+obs_mjd[0]
