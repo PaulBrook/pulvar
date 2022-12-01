@@ -28,7 +28,7 @@ os.system('vap -c freq {0}/*.dzTF | egrep "( {1}..| {2}..| {3}..)" > frequency_l
 #os.system('vap -c rcvr {0}/*.x.zap | egrep " 430" > frequency_list.txt' .format(directory))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
 
 # CREATE AN ARRAY WHICH SEPARATES THE FILENAME AND THE FREQUENCY                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
-y = np.genfromtxt("frequency_list.txt", dtype=[('filename','S50'),('freq','S50')])
+y = np.genfromtxt("frequency_list.txt", dtype=[('filename','U50'),('freq','U50')])
 # NUMBER OF OBSERVATIONS AT THE DESIRED FREQUENCY                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
 numrows = y.shape[0]
 
@@ -40,7 +40,7 @@ for i in range(numrows):
 
 new_y.sort(key=lambda new_y: new_y[1:7])
 
-print new_y
+print(new_y)
 
 # LOOP OVER EACH EPOCH (ROW) AND PERFORM PDV TO FIND OUT HOW MANY OBSERVATIONS REMAIN THAT HAVE bins PHASE BINS - ASSUMES THAT THE OBSERVATIONS HAVE ALREADY BEEN TIME AND FREQUENCY SCRUNCHED.                                                                                                                                                                                                                                                                                                                                                                                                                                    
 
@@ -48,7 +48,7 @@ rem_count=0
 
 for i in range(numrows):
     epoch_name = new_y[i]
-    print "(1) CURRENTLY:",epoch_name
+    print("(1) CURRENTLY:",epoch_name)
     os.system('pdv -ZFTt {0}/{1} > temp.txt '.format(directory,epoch_name))
     stokes_line = np.genfromtxt('temp.txt', usecols=3, dtype=[('stokesI','float')], skip_header=1)
     if len(stokes_line)!=bins:
@@ -62,7 +62,7 @@ b=0
 removed=0
 
 for i in range(numrows):
-    print "(2) CURRENTLY:",epoch_name
+    print("(2) CURRENTLY:",epoch_name)
     epoch_name = new_y[i]
     os.system('pdv -ZFTt {0}/{1} > temp.txt '.format(directory,epoch_name))
     stokes_line = np.genfromtxt('temp.txt', usecols=3, skip_header=1)
