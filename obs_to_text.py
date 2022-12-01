@@ -9,6 +9,7 @@ parser.add_argument('-p','--pulsar', help='Name as pulsar', required=True)
 parser.add_argument('-d','--directory', help='Directory in which the observation files are located', required=True)
 parser.add_argument('-b','--phasebins', help='Number of phase bins in the observations', type=int, required='True')
 parser.add_argument('-f','--obsfreq', help='Approximate observation frequency (MHz)', type=int, required='True')
+parser.add_argument('-e','--ext', help='Archive file extension', required='True')
 
 # PASSING THE ARGUMENTS TO VARIABLES                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
 
@@ -17,12 +18,14 @@ pulsar = args.pulsar
 directory = args.directory
 bins = args.phasebins
 obs_freq = args.obsfreq
+ext = args.ext
 
 # ALLOW GREP IN THE NEXT LINE TO SEARCH *AROUND* THE OBSERVATION FREQUENCY YOU HAVE CHOSEN                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
 rounding = int(np.floor(((obs_freq-1)/100)))
 
 # PASS THE FILENAME AND FREQUENCY OF ONLY THE OBSERVATION FILES AROUND A FREQUENCY obs_freq TO A TEXT FILE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
-os.system('vap -c freq {0}/*.dzTF | egrep "( {1}..| {2}..| {3}..)" > frequency_list.txt' .format(directory,rounding,rounding+1,rounding-1))
+#os.system('vap -c freq {0}/*.dzTF | egrep "( {1}..| {2}..| {3}..)" > frequency_list.txt' .format(directory,rounding,rounding+1,rounding-1))
+os.system('vap -c freq {0}/*.{4} | egrep "( {1}..| {2}..| {3}..)" > frequency_list.txt' .format(directory,rounding,rounding+1,rounding-1,ext))
 #os.system('vap -c rcvr {0}/*.dzTF | egrep " 430" > frequency_list.txt' .format(directory))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
 #os.system('vap -c freq {0}/*.x.zap | egrep "( {1}..)" > frequency_list.txt' .format(directory,rounding))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
 #os.system('vap -c rcvr {0}/*.x.zap | egrep " 430" > frequency_list.txt' .format(directory))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
@@ -98,8 +101,9 @@ new_mjd = mjd_length_sorted[:,0]
 
 print "Number of profiles that are not",bins,"bins and therefore removed:",removed,"out of",numrows,"original profiles"
 stokes_columns = np.transpose(stokes_list)
-stokes_columns2 = np.zeros((bins+2,num_left))
+stokes_columns2 = np.zeros((bins+1,num_left))
 stokes_columns2 = np.vstack([stokes_columns,new_length,new_mjd])
+stokes_columns2 = np.vstack([stokes_columns,new_mjd])
 
 np.savetxt('{0}_{1}list_{2}.txt'.format(pulsar,obs_freq,bins),stokes_columns2, delimiter='\t')
 
