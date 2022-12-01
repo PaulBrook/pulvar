@@ -99,7 +99,7 @@ new_mjd = mjd_length_sorted[:,0]
 
 # CREATES THE 2D MATRIX                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
 
-print "Number of profiles that are not",bins,"bins and therefore removed:",removed,"out of",numrows,"original profiles"
+print("Number of profiles that are not",bins,"bins and therefore removed:",removed,"out of",numrows,"original profiles")
 stokes_columns = np.transpose(stokes_list)
 stokes_columns2 = np.zeros((bins+1,num_left))
 stokes_columns2 = np.vstack([stokes_columns,new_length,new_mjd])
