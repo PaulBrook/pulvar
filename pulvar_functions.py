@@ -250,7 +250,7 @@ def save_profiles(pulsar, data, mjd, allbins,directory,ylabel='Flux Density (mJy
         ax.set_ylabel(r'Flux Density (mJy)',fontsize=14)
         ax.set_xlabel(r'Phase Bins',fontsize=14)
         xlocs = [0.,102.3,204.6,306.9,409.2,511.5,613.8,716.1,818.4,920.7,1023.]
-        ax.set_xticks(xlocs,xticklabels)
+        #ax.set_xticks(xlocs,xticklabels)
         fig.tight_layout()
         plt.savefig('./{0}/{3}/{1}_{2}.png' .format(pulsar,int(math.floor(mjd[i])),i,directory))
         plt.clf()
